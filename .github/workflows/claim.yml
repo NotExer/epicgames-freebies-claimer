@@ -1,0 +1,20 @@
+name: Epic Games Claimer
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 18 * * *'
+
+jobs:
+  claim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - name: Run Claimer
+        env:
+          DEVICE_AUTHS: ${{ secrets.DEVICE_AUTHS }}
+        run: node claimer.js
