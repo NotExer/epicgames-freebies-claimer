@@ -14,9 +14,14 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      
+      - name: Create device_auths.json
+        run: |
+          mkdir -p data
+          echo '${{ secrets.DEVICE_AUTHS }}' > data/device_auths.json
+          
       - name: Run Claimer
         env:
-          DEVICE_AUTHS: ${{ secrets.DEVICE_AUTHS }}
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: node claimer.js
